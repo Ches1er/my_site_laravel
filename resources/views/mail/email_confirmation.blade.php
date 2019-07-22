@@ -1,13 +1,14 @@
 @component('mail::message')
-    <h3>Email confirmation letter</h3>>
+    <h3>Письмо подтверждения регистрации</h3>>
 
-    Congratulations {{$name}}, you have almost registrated.
-    Finally you must push the button.
+    Поздравляем {{$name}}, вы практически зарегистрировались на нашем ресурсе.
+    Для окончания процесса, пожалуйста нажмите на кнопку подтверждения.
+    Если вы не регистрировались на нашем сервисе, пожалуйста, проигнорируйте это письмо.
 
     @component('mail::button', ['url' => $url])
-        Email confirmation!
+        Завершить регистрацию
     @endcomponent
 
-    Thanks,<br>
+    Спасибо,<br>
     {{ config('app.name') }}
 @endcomponent

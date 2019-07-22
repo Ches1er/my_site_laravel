@@ -174,7 +174,12 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\Custom\ServiceApiAuthProvider::class
+
+        //Custom
+
+        App\Providers\Custom\ServiceApiAuthProvider::class,
+        App\Providers\Custom\Main\ServiceApiNewsProvider::class,
+        App\Providers\Custom\Main\ServiceApiEventsProvider::class,
 
     ],
 

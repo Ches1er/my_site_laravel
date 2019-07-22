@@ -85,28 +85,31 @@ class DBApiAuthService implements ServiceApiAuth
 
     public function mail_verification(string $verification_token)
     {
-        DB::transaction(function () use ($verification_token){
-            $time = date('Y-m-d H:i:s',time());
-            $user = DB::table('users')
-                ->where('verification_token',$verification_token)
-                ->first();
-            DB::table('users')
-                ->where('verification_token',$verification_token)
-                ->whereNull('email_verified_at')
-                ->update(['email_verified_at'=>$time]);
-            if(is_null(DB::table('users_roles')->where('user_id',(int)$user->id)->first()))
-            {
-                $activ_user_role = Role::where('role',RoleConstants::VALID_USER)->first();
-                DB::table('users_roles')->insert(['user_id'=>$user->id,'role_id'=>$activ_user_role->id]);
-            }
+        try {
+            DB::transaction(function () use ($verification_token) {
+                $time = date('Y-m-d H:i:s', time());
+                $user = DB::table('users')
+                    ->where('verification_token', $verification_token)
+                    ->first();
+                DB::table('users')
+                    ->where('verification_token', $verification_token)
+                    ->whereNull('email_verified_at')
+                    ->update(['email_verified_at' => $time]);
+                if (is_null(DB::table('users_roles')->where('user_id', (int)$user->id)->first())) {
+                    $activ_user_role = Role::where('role', RoleConstants::VALID_USER)->first();
+                    DB::table('users_roles')->insert(['user_id' => $user->id, 'role_id' => $activ_user_role->id]);
+                }
+            });
+        }
+        catch (\Exception $e){
+            return false;
+        }
+        $user = User::where('verification_token', $verification_token)->first();
             // -- MAIL -->
             MailConfigs::instance()->verificationEmail();
             Mail::to($user->email)
                 ->send(new ConfirmationEmailSuccess(['name'=>$user->name]));
             return true;
-        });
-        return false;
-
     }
 
     // -- OTHER

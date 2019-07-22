@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Configs\RedirectUrlConfigs;
 use App\Contracts\ServiceApiAuth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -10,10 +11,12 @@ use App\Http\Controllers\Controller;
 class ApiAuthController extends Controller
 {
     protected $authService;
+    private $redirectUrlConfigs;
 
     public function __construct(ServiceApiAuth $serviceApiAuth)
     {
         $this->authService = $serviceApiAuth;
+        $this->redirectUrlConfigs = new RedirectUrlConfigs();
     }
 
     public function actionLogin(Request $request){
@@ -34,7 +37,7 @@ class ApiAuthController extends Controller
 
     public function actionEmailVerification($verificationtoken){
         if($this->authService->mail_verification($verificationtoken)){
-            return redirect()->to('http://localhost:4200/');
+            return redirect($this->redirectUrlConfigs::ROOT);
         };
         return null;
     }

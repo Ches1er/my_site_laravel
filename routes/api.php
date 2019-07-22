@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Hash;
 |
 */
 
+        //TEST
+
 Route::middleware('auth:api')->get('testapi', function (Request $request) {
     return $request->user();
 });
@@ -24,6 +26,8 @@ Route::middleware('auth:api', 'hasRole:admin')->
     get('admintest', function (){
         return json_encode("Hello Admin");
 });
+
+        //AUTH
 
 Route::get('/categories','RestController@actionCategories');
 Route::post('/categories/add','RestController@actionAddCategory');
@@ -37,9 +41,20 @@ Route::get('finalregister/{verificationtoken}', 'Auth\ApiAuthController@actionEm
 Route::post('user', 'Auth\ApiAuthController@actionUser');
 Route::post('roles', 'Auth\ApiAuthController@actionRoles');
 
-Route::get('redirect', function () {
-    return redirect('google.com');
-});
+    //NEWS
+
+Route::get('news/{salesarea}', 'Main\ApiNewsController@actionShowNews');
+//Route::middleware('auth:api', 'hasRole:admin')->post('news/add', 'Main\ApiNewsController@actionAddNews');
+Route::post('news/add', 'Main\ApiNewsController@actionAddNews');
+Route::middleware('auth:api', 'hasRole:admin')->post('news/del', 'Main\ApiNewsController@actionDelNews');
+
+    //EVENTS
+
+Route::get('events/{salesarea}','Main\ApiEventsController@actionShowEvents');
+Route::post('events/add', 'Main\ApiEventsController@actionAddEvent');
+
+
+
 
 
 

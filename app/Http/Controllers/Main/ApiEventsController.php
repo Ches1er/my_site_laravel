@@ -30,6 +30,6 @@ class ApiEventsController extends Controller
         $data = $request->only('name','short_event','full_event','img','date','expiration','sales_area');
         $data['date'] = date('Y-m-d H:i:s', $data['date']);
         $data['expiration'] = date('Y-m-d H:i:s', $data['expiration']);
-        $this->eventsService->addEvent($data);
+        return $this->eventsService->addEvent($data);
     }
 }

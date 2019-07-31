@@ -40,10 +40,11 @@ class DBApiEventsService implements ServiceApiEvent
             'expiration'=>$data['expiration'],
             'sales_area_id' => $sales_area_db->id
         ]);
+        return ['response'=>'success'];
     }
 
     public function delEvent(int $id)
     {
-        // TODO: Implement delEvent() method.
+        return ['response'=>'success'];
     }
 }

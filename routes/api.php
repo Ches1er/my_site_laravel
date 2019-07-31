@@ -44,6 +44,7 @@ Route::post('roles', 'Auth\ApiAuthController@actionRoles');
     //NEWS
 
 Route::get('news/{salesarea}', 'Main\ApiNewsController@actionShowNews');
+// todo add/del route with admin middleware
 //Route::middleware('auth:api', 'hasRole:admin')->post('news/add', 'Main\ApiNewsController@actionAddNews');
 Route::post('news/add', 'Main\ApiNewsController@actionAddNews');
 Route::middleware('auth:api', 'hasRole:admin')->post('news/del', 'Main\ApiNewsController@actionDelNews');
@@ -51,8 +52,33 @@ Route::middleware('auth:api', 'hasRole:admin')->post('news/del', 'Main\ApiNewsCo
     //EVENTS
 
 Route::get('events/{salesarea}','Main\ApiEventsController@actionShowEvents');
+// todo add/del route with admin middleware
 Route::post('events/add', 'Main\ApiEventsController@actionAddEvent');
 
+    //GOODS
+
+    //Applying_groups
+
+Route::get('applying_groups/{salesarea}','Main\ApiProductsController@actionShowApplyingGroups');
+// todo add/del route with admin middleware
+Route::post('applying_groups/add','Main\ApiProductsController@actionAddApplyingGroup');
+
+    //Brands
+
+Route::get('brands/{salesarea}','Main\ApiProductsController@actionShowBrands');
+// todo add/del route with admin middleware
+Route::post('brands/add','Main\ApiProductsController@actionAddBrand');
+
+    //Products
+
+Route::get('products/{id}','Main\ApiProductsController@actionShowProduct');
+Route::get('products/applying/{id}','Main\ApiProductsController@actionShowProductsByApplying');
+Route::get('products/brand/{id}','Main\ApiProductsController@actionShowProductsByBrand');
+
+    //Clients
+
+Route::get('clients/{id}','Main\ApiClientsController@actionShowClient');
+Route::get('clients/{salesarea}','Main\ApiClientsController@actionShowClients');
 
 
 

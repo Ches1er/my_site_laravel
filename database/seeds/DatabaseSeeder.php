@@ -20,7 +20,9 @@ class DatabaseSeeder extends Seeder
                 CategoriesTableSeeder::class,
                 SuppliesTableSeeder::class,
                 NewsTableSeeder::class,
-                EventsTableSeeder::class
+                EventsTableSeeder::class,
+                ApplyingGroupsTableSeeder::class,
+                ProductsTableSeeder::class
             ]
             );
     }

@@ -180,6 +180,10 @@ return [
         App\Providers\Custom\ServiceApiAuthProvider::class,
         App\Providers\Custom\Main\ServiceApiNewsProvider::class,
         App\Providers\Custom\Main\ServiceApiEventsProvider::class,
+        App\Providers\Custom\Main\ServiceApiApplyingGroupsProvider::class,
+        App\Providers\Custom\Main\ServiceApiBrandsProvider::class,
+        App\Providers\Custom\Main\ServiceApiProductProvider::class,
+        App\Providers\Custom\Main\ServiceApiClientsProvider::class
 
     ],
 

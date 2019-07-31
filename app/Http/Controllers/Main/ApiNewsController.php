@@ -29,7 +29,7 @@ class ApiNewsController extends Controller
     public function actionAddNews(Request $request){
         $data = $request->only('name','short_news','full_news','img','date','sales_area');
         $data['date'] = date('Y-m-d H:i:s', $data['date']);
-        $this->newsService->addNews($data);
+        return $this->newsService->addNews($data);
     }
 
 }

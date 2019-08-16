@@ -22,14 +22,17 @@ class ApiNewsController extends Controller
         $this->redirectUrlConfigs = new RedirectUrlConfigs();
     }
 
+    public function actionShowAllNews(){
+        return json_encode($this->newsService->showAllNews());
+    }
     public function actionShowNews($salesarea){
         return json_encode($this->newsService->showNews($salesarea));
     }
 
     public function actionAddNews(Request $request){
-        $data = $request->only('name','short_news','full_news','img','date','sales_area');
-        $data['date'] = date('Y-m-d H:i:s', $data['date']);
-        return $this->newsService->addNews($data);
+        $data = $request->only('id','name','short_news','full_news','img','salesArea','action');
+        $data['date'] = time();
+        return json_encode($this->newsService->addNews($data));
     }
 
 }

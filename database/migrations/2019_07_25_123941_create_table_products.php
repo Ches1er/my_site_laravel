@@ -20,7 +20,7 @@ class CreateTableProducts extends Migration
             $table->bigInteger('sales_area_id')->unsigned();
             $table->bigInteger('applying_group_id')->unsigned();
             $table->boolean('active');
-            $table->mediumText('img');
+            $table->string('img');
             $table->text('tech_info');
             $table->timestamps();
 

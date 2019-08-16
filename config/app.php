@@ -183,8 +183,12 @@ return [
         App\Providers\Custom\Main\ServiceApiApplyingGroupsProvider::class,
         App\Providers\Custom\Main\ServiceApiBrandsProvider::class,
         App\Providers\Custom\Main\ServiceApiProductProvider::class,
-        App\Providers\Custom\Main\ServiceApiClientsProvider::class
-
+        App\Providers\Custom\Main\ServiceApiClientsProvider::class,
+        App\Providers\Custom\Main\ServiceApiObjectsProvider::class,
+        App\Providers\Custom\Main\ServiceApiSalesAreaProvider::class,
+        App\Providers\Custom\Main\ServiceApiImagesProvider::class,
+        App\Providers\Custom\Main\ServiceApiContactsProvider::class,
+        App\Providers\Custom\Main\ServiceApiSolutionsProvider::class,
     ],
 
     /*

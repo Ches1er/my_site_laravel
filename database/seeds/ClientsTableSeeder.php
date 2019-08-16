@@ -15,13 +15,13 @@ class ClientsTableSeeder extends Seeder
         DB::table('clients')->insert([
             [
                 'name'=> 'Клиент 1',
-                'logo' => 'http://mydomain/img/admin.png',
+                'img' => 1,
                 'desc' => 'Описание клиента упаковочных материалов номер 1',
                 'sales_area_id' => 1
             ],
             [
                 'name'=> 'Клиент 2',
-                'logo' => 'http://mydomain/img/admin.png',
+                'img' => 1,
                 'desc' => 'Описание клиента упаковочных материалов номер 2',
                 'sales_area_id' => 1
             ]

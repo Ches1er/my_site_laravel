@@ -15,8 +15,8 @@ class origin
      */
     public function handle($request, Closure $next)
     {
-        $response =  $next($request);
-        $response->headers->set("Access-Control-Allow-Origin","*");
-        return $response;
+        return $next($request)
+            ->header('Access-Control-Allow-Origin', '*')
+            ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     }
 }

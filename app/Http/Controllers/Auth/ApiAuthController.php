@@ -32,7 +32,7 @@ class ApiAuthController extends Controller
 
     public function actionRegister(Request $request){
         $passport = $request->only('name','email','password','phones','confirmedClient');
-        return $this->authService->register($passport);
+        return json_encode($this->authService->register($passport));
     }
 
     public function actionEmailVerification($verificationtoken){

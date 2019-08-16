@@ -22,7 +22,12 @@ class DatabaseSeeder extends Seeder
                 NewsTableSeeder::class,
                 EventsTableSeeder::class,
                 ApplyingGroupsTableSeeder::class,
-                ProductsTableSeeder::class
+                ProductsTableSeeder::class,
+                ClientsTableSeeder::class,
+                ObjectsTableSeeder::class,
+                ImagesTableSeeder::class,
+                BranchRolesTableSeeder::class,
+                BranchTableSeeder::class
             ]
             );
     }

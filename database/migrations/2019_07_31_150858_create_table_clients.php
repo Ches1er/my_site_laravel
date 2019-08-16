@@ -16,7 +16,7 @@ class CreateTableClients extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('logo');
+            $table->bigInteger('img');
             $table->mediumText('desc');
             $table->bigInteger('sales_area_id')->unsigned();
             $table->timestamps();

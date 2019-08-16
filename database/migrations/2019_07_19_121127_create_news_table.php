@@ -18,8 +18,8 @@ class CreateNewsTable extends Migration
             $table->string('name');
             $table->mediumText('short_news');
             $table->mediumText('full_news');
-            $table->string('img');
-            $table->timestamp('date');
+            $table->bigInteger('img');
+            $table->bigInteger('date');
             $table->bigInteger('sales_area_id')->unsigned();
             $table->timestamps();
 

@@ -40,8 +40,10 @@ class ApiProductsController extends Controller
     }
 
     public function actionAddApplyingGroup(Request $request){
-        $data = $request->only('name','sales_area');
-        return $this->applyingGroupsService->addApplyingGroup($data);
+        $action = $request->only('action');
+        if ($action['action'] === 'add') $data = $request->only('name','sales_area','action');
+        if ($action['action'] === 'update') $data = $request->only('id','name','sales_area','action');
+        return json_encode($this->applyingGroupsService->addApplyingGroup($data));
     }
 
     // Brands
@@ -52,18 +54,27 @@ class ApiProductsController extends Controller
     }
 
     public function actionAddBrand(Request $request){
-        $data = $request->only('name','sales_area','img');
-        return $this->brandsService->addBrand($data);
+        /* Client give us request without img, in service set img by default
+        * In perspective we can send with request img.
+        */
+        $action = $request->only('action');
+        if ($action['action'] === 'add') $data = $request->only('name','sales_area','action');
+        if ($action['action'] === 'update') $data = $request->only('id','name','sales_area','action','active');
+        return json_encode($this->brandsService->addBrand($data));
     }
 
         // Products
 
     //Show
 
+    public function actionShowAllProducts()
+    {
+        $products = $this->productService->showAllProducts();
+        return json_encode($products);
+    }
     public function actionShowProduct($id){
         $product = $this->productService->showProduct($id);
-        $product->img = explode(',',$product->img);
-        return json_encode($product);
+        return json_encode($product[0]);
     }
     public function actionShowProductsByApplying($id){
         $products = $this->productService->showProductsByApp($id);
@@ -78,5 +89,9 @@ class ApiProductsController extends Controller
             $product->img =  explode(',',$product->img);
         }
         return json_encode($products);
+    }
+    public function actionAddProduct(Request $request){
+        $data = $request->only('id','action','name', 'brandId', 'active','img','tech_info','applying_group','salesArea');
+        return json_encode($this->productService->addUpdateProduct($data));
     }
 }

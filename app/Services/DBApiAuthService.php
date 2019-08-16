@@ -47,7 +47,7 @@ class DBApiAuthService implements ServiceApiAuth
                 return json_encode(new UserResource($user));
             }
         }
-        return json_encode(['error'=>'Ошибка! Логин или пароль введены неверно']);
+        return json_encode(['error'=>'Ошибка! Логин или пароль введены неверно!']);
     }
 
     public function loginRemember(string $remember_token)
@@ -64,23 +64,27 @@ class DBApiAuthService implements ServiceApiAuth
     public function register(Array $passport)
     {
         if (!empty(User::where('name',$passport['name'])->first())){
-            return json_encode(['error'=>'Пользователь с таким именем уже существует']);
+            return ['response'=>'User exists'];
         }
-        User::create([
+        if (User::create([
             'name'=>$passport['name'],
             'email'=>$passport['email'],
             'password'=>Hash::make($passport['password']),
             'phones'=>$passport['phones'],
             'confirmed_client'=>$passport['confirmedClient'],
             'verification_token' => Str::random(10)
-        ]);
-        // -- MAIL -->
-        MailConfigs::instance()->verificationEmail();
-        $user = User::where('name',$passport['name'])->first();
-        Mail::to($passport['email'])
-            ->send(new ConfirmationEmail(['name'=>$user->name,'verification_token'=>$user->verification_token]));
+        ])) {
+            // -- MAIL -->
+            MailConfigs::instance()->verificationEmail();
+            $user = User::where('name',$passport['name'])->first();
+            Mail::to($passport['email'])
+                ->send(new ConfirmationEmail(['name'=>$user->name,'verification_token'=>$user->verification_token]));
 
-        return json_encode(['message'=>'На указанный Вами адрес электронной почты отправлено письмо с подтверждением регистрации']);
+            //return json_encode(['resp'=>'На указанный Вами адрес электронной почты отправлено письмо с подтверждением регистрациию.']);
+            return ['response'=>'Registration succeed'];
+        };
+        return ['response'=>'Registration error'];
+
     }
 
     public function mail_verification(string $verification_token)

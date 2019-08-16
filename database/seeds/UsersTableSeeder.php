@@ -22,14 +22,14 @@ class UsersTableSeeder extends Seeder
                 "email"=>"shop@ukrpolystroy.com.ua",
                 "password"=>$pass,
                 "verification_token"=>Str::random(20),
-                "phones"=>"{+380956281}"
+                "phones"=>"+380956281"
             ],
             [
                 "name"=>"User",
                 "email"=>"shop@ukrpolystroy.com.ua",
                 "password"=>$pass,
                 "verification_token"=>Str::random(20),
-                "phones"=>"{+380956281}"
+                "phones"=>"+380956281"
             ]
         ]);
     }

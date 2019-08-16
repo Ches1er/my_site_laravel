@@ -19,8 +19,8 @@ class CreateEventsTable extends Migration
             $table->mediumText('short_event');
             $table->mediumText('full_event');
             $table->string('img');
-            $table->timestamp('date');
-            $table->timestamp('expiration');
+            $table->bigInteger('date');
+            $table->bigInteger('expiration');
             $table->bigInteger('sales_area_id')->unsigned();
             $table->timestamps();
 

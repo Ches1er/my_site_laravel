@@ -11,18 +11,40 @@ namespace App\Services\Main;
 
 use App\Contracts\ServiceApiProducts;
 use App\Models\Product;
+use App\MyTraits\getObjWithImagesPath;
 
 class DBApiProductsService implements ServiceApiProducts
 {
+    Use getObjWithImagesPath;
+
+    public function showAllProducts()
+    {
+        $products = Product::get();
+        return $this->getWithImagesPath($products);
+    }
 
     public function showProduct(int $id)
     {
-        return Product::where('id',$id)->first();
+        $product = Product::where('id',$id)->get();
+        return $this->getWithImagesPath($product);
     }
 
-    public function addProduct(array $data)
+    public function addUpdateProduct(array $data)
     {
-        // TODO: Implement addProduct() method.
+        if (Product::where('name',$data['name'])->first() && $data['action']==='add')return ['response'=>'this product exists'];
+        if (Product::updateOrCreate(['id'=>(int)$data['id']],[
+            'name'=> $data['name'],
+            'brand_id'=>$data['brandId'],
+            'sales_area_id' => $data['salesArea'],
+            'active' => (int)$data['active'],
+            'img' => $data['img'],
+            'tech_info' => $data['tech_info'],
+            'applying_group_id' => $data['applying_group']
+        ])) {
+            if ($data['action']==='update')return ['response'=>'update success'];
+            return ['response'=>'insert success'];
+        };
+        return ['response'=>'error'];
     }
 
     public function delProduct(int $id)
@@ -32,11 +54,13 @@ class DBApiProductsService implements ServiceApiProducts
 
     public function showProductsByApp(int $id)
     {
-        return Product::where('applying_group_id',$id)->get();
+        $products = Product::where('applying_group_id',$id)->get();
+        return $this->getWithImagesPath($products);
     }
 
     public function showProductsByBrand(int $id)
     {
-        return Product::where('brand_id',$id)->get();
+        $products = Product::where('brand_id',$id)->get();
+        return $this->getWithImagesPath($products);
     }
 }

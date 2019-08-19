@@ -40,6 +40,7 @@ Route::get('finalregister/{verificationtoken}', 'Auth\ApiAuthController@actionEm
 
 Route::post('user', 'Auth\ApiAuthController@actionUser');
 Route::post('roles', 'Auth\ApiAuthController@actionRoles');
+Route::post('is_admin', 'Auth\ApiAuthController@actionIsAdmin');
 
     //NEWS
 
@@ -105,6 +106,7 @@ Route::get('branches','Main\ApiContactsController@actionShowBranches');
 
     //Solutions
 Route::get('solutions','Main\ApiSolutionController@actionShowSolutions');
+Route::post('solutions/add','Main\ApiSolutionController@actionAddSolution');
 
 
 

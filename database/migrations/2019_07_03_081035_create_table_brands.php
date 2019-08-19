@@ -17,6 +17,8 @@ class CreateTableBrands extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->boolean('active');
+            $table->boolean('official');
+            $table->boolean('web')->nullable();
             $table->bigInteger('sales_area_id')->unsigned();
             $table->string('img');
             $table->timestamps();

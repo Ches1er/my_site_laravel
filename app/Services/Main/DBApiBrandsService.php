@@ -39,14 +39,18 @@ class DBApiBrandsService implements ServiceApiBrands
                 'name' => $data['name'],
                 'sales_area_id' => (int)$data['sales_area'],
                 'img' => $img,
-                'active' => 1
+                'active' => 1,
+                'official'=>(int)($data['official']==true),
+                'web'=>$data['web']
             ])) return ['response'=>'insert success'];
         }
         if ($data['action']==='update'){
             if (Brand::where('id',$data['id'])->update([
                 'name' => $data['name'],
                 'sales_area_id' => (int) $data['sales_area'],
-                'active' => (int)$data['active']
+                'active' => (int)($data['active']==true),
+                'official'=>(int)($data['official']==true),
+                'web'=>$data['web']
             ])) return ['response'=>'update success'];
         }
         return ['response'=>'error'];

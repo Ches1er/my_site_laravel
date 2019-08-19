@@ -18,4 +18,5 @@ interface ServiceApiAuth
     public function mail_verification (string $verification_token);
     public function user(string $api_token);
     public function roles(string $api_token);
+    public function isAdmin(string $api_token);
 }

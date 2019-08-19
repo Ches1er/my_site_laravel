@@ -12,6 +12,6 @@ namespace App\Contracts;
 interface ServiceApiSolutions
 {
     public function showSolutions();
-    public function addSolution($data);
+    public function addSolution(Array $data);
     public function delSolutions($id);
 }

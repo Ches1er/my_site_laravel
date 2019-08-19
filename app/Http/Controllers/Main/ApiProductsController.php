@@ -58,8 +58,8 @@ class ApiProductsController extends Controller
         * In perspective we can send with request img.
         */
         $action = $request->only('action');
-        if ($action['action'] === 'add') $data = $request->only('name','sales_area','action');
-        if ($action['action'] === 'update') $data = $request->only('id','name','sales_area','action','active');
+        if ($action['action'] === 'add') $data = $request->only('name','sales_area','action','official','web');
+        if ($action['action'] === 'update') $data = $request->only('id','name','sales_area','action','active','official','web');
         return json_encode($this->brandsService->addBrand($data));
     }
 

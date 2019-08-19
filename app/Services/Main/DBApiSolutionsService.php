@@ -10,6 +10,7 @@ namespace App\Services\Main;
 
 
 use App\Contracts\ServiceApiSolutions;
+use App\Models\Image;
 use App\Models\Solution;
 use App\MyTraits\getObjWithImagesPath;
 
@@ -21,9 +22,26 @@ class DBApiSolutionsService implements ServiceApiSolutions
         return $this->getWithImagesPath(Solution::get());
     }
 
-    public function addSolution($data)
+    public function addSolution(Array $data)
     {
-        // TODO: Implement addSolution() method.
+        if (!$data['img']){
+            $default_image = Image::where('name','default_news')->first();
+            $data['img'] = $default_image->id;
+        }
+        if (Solution::where('name',$data['name'])->first() && $data['action']==='add')return ['response'=>'this solution exist'];
+        if (Solution::updateOrCreate(['id'=>$data['id']],
+            [
+                'name' => $data['name'],
+                'desc'=>$data['desc'],
+                'img'=>$data['img'],
+                'products'=>$data['products'],
+                'items'=>$data['items']
+            ]
+        )){
+            if ($data['action']==='update')return ['response'=>'update success'];
+            return ['response'=>'insert success'];
+        }
+        return ['response'=>'error'];
     }
 
     public function delSolutions($id)

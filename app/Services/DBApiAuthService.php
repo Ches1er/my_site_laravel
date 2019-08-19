@@ -135,4 +135,11 @@ class DBApiAuthService implements ServiceApiAuth
     }
 
 
+    public function isAdmin(string $api_token)
+    {
+        $roles =  json_decode($this->roles($api_token));
+        if (!$roles)return ['response'=>false];
+        if (in_array('admin',$roles)) return ['response'=>true];;
+        return ['response'=>false];
+    }
 }

@@ -37,6 +37,10 @@ class ImagesTableSeeder extends Seeder
             [
                 'name'=> 'calc_kerapoxy.png',
                 'path' => $this->path.'img/calc_kerapoxy.png'
+            ],
+            [
+                'name'=> '404.jpg',
+                'path' => $this->path.'img/404.jpg.png'
             ]
 
         ]);

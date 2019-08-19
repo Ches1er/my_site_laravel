@@ -26,8 +26,8 @@ class ApiAuthController extends Controller
     }
 
     public function actionLoginRemember(Request $request){
-        $remember_token = $request->post('remember_token');
-        return $this->authService->loginRemember($remember_token);
+        $params = $request->only('remember_token');
+        return $this->authService->loginRemember($params['remember_token']);
     }
 
     public function actionRegister(Request $request){
@@ -50,5 +50,9 @@ class ApiAuthController extends Controller
     public function actionRoles(Request $request){
         $api_token = $request->post('api_token');
         return $this->authService->roles($api_token);
+    }
+    public function actionIsAdmin(Request $request){
+        $params = $request->only('api_token');
+        return json_encode($this->authService->isAdmin( $params['api_token']));
     }
 }

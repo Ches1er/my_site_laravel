@@ -17,11 +17,14 @@ class BrandsTableSeeder extends Seeder
                  'name'=>'Mapei',
                  'active'=>true,
                  'sales_area_id'=>2,
+                 'official'=>1,
+                 'web'=>'https://www.mapei.com',
                  'img'=>'3'],
             [
                 'name'=>'Biaxplen',
                 'active'=>true,
                 'sales_area_id'=>1,
+                'official'=>0,
                 'img'=>'1'
             ]
         ]);

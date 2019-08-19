@@ -18,6 +18,7 @@ class CreateSolutionsTable extends Migration
             $table->mediumText('name');
             $table->mediumText('desc');
             $table->bigInteger('img');
+            $table->mediumText('items');
             $table->mediumText('products');
             $table->timestamps();
         });

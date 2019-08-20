@@ -18,11 +18,11 @@ use Illuminate\Support\Facades\Hash;
 
         //TEST
 
-Route::middleware('auth:api')->get('testapi', function (Request $request) {
-    return $request->user();
+Route::middleware('isAuth')->get('testapi', function (Request $request) {
+    return json_encode('hello');
 });
 
-Route::middleware('auth:api', 'hasRole:admin')->
+Route::middleware('isAuth', 'hasRole:admin')->
     get('admintest', function (){
         return json_encode("Hello Admin");
 });
@@ -41,6 +41,8 @@ Route::get('finalregister/{verificationtoken}', 'Auth\ApiAuthController@actionEm
 Route::post('user', 'Auth\ApiAuthController@actionUser');
 Route::post('roles', 'Auth\ApiAuthController@actionRoles');
 Route::post('is_admin', 'Auth\ApiAuthController@actionIsAdmin');
+Route::post('is_auth', 'Auth\ApiAuthController@actionIsAuth');
+Route::middleware('isAuth')->post('update_user', 'Auth\ApiAuthController@actionUpdateUser');
 
     //NEWS
 
@@ -107,6 +109,15 @@ Route::get('branches','Main\ApiContactsController@actionShowBranches');
     //Solutions
 Route::get('solutions','Main\ApiSolutionController@actionShowSolutions');
 Route::post('solutions/add','Main\ApiSolutionController@actionAddSolution');
+
+    //Sale
+
+Route::prefix('sales')->group(function(){
+    // Products
+    Route::get('/products', 'Main\ApiSaleController@actionShowProducts');
+    Route::get('/product/{id?}', 'Main\ApiSaleController@actionShowProduct');
+});
+
 
 
 

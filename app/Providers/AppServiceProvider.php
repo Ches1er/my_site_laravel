@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Contracts\ServiceApiContacts;
+use App\Contracts\ServiceApiSale;
 use App\Providers\Custom\CategoryServiceProvider;
 use App\Providers\Custom\Mail\MailAuthServiceProvider;
 use App\Providers\Custom\Main\ServiceApiApplyingGroupsProvider;
@@ -14,6 +15,7 @@ use App\Providers\Custom\Main\ServiceApiImagesProvider;
 use App\Providers\Custom\Main\ServiceApiNewsProvider;
 use App\Providers\Custom\Main\ServiceApiObjectsProvider;
 use App\Providers\Custom\Main\ServiceApiProductProvider;
+use App\Providers\Custom\Main\ServiceApiSaleProvider;
 use App\Providers\Custom\Main\ServiceApiSalesAreaProvider;
 use App\Providers\Custom\Main\ServiceApiSolutionsProvider;
 use App\Providers\Custom\ServiceApiAuthProvider;
@@ -41,6 +43,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->register(ServiceApiImagesProvider::class);
         $this->app->register(ServiceApiContactsProvider::class);
         $this->app->register(ServiceApiSolutionsProvider::class);
+        $this->app->register(ServiceApiSaleProvider::class);
     }
 
     /**

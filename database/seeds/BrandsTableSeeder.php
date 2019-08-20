@@ -26,6 +26,13 @@ class BrandsTableSeeder extends Seeder
                 'sales_area_id'=>1,
                 'official'=>0,
                 'img'=>'1'
+            ],
+            [
+                'name'=>'Litokol',
+                'active'=>true,
+                'sales_area_id'=>2,
+                'official'=>1,
+                'img'=>'1'
             ]
         ]);
     }

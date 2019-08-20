@@ -27,7 +27,10 @@ class DatabaseSeeder extends Seeder
                 ObjectsTableSeeder::class,
                 ImagesTableSeeder::class,
                 BranchRolesTableSeeder::class,
-                BranchTableSeeder::class
+                BranchTableSeeder::class,
+                ClientsDiscountsTableSeeder::class,
+                BrandsExchangeTableSeeder::class,
+                ProductsSaleTableSeeder::class
             ]
             );
     }

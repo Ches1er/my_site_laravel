@@ -189,6 +189,7 @@ return [
         App\Providers\Custom\Main\ServiceApiImagesProvider::class,
         App\Providers\Custom\Main\ServiceApiContactsProvider::class,
         App\Providers\Custom\Main\ServiceApiSolutionsProvider::class,
+        App\Providers\Custom\Main\ServiceApiSaleProvider::class
     ],
 
     /*

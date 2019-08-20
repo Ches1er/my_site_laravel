@@ -55,4 +55,8 @@ class ApiAuthController extends Controller
         $params = $request->only('api_token');
         return json_encode($this->authService->isAdmin( $params['api_token']));
     }
+    public function actionUpdateUser(Request $request){
+        $data = $request->only('id','name','email','phones','confirmed_client','email_verified_at');
+        return json_encode($this->authService->updateUser($data));
+    }
 }

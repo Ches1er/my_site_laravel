@@ -91,7 +91,7 @@ class DBApiAuthService implements ServiceApiAuth
     {
         try {
             DB::transaction(function () use ($verification_token) {
-                $time = date('Y-m-d H:i:s', time());
+                $time = time();
                 $user = DB::table('users')
                     ->where('verification_token', $verification_token)
                     ->first();
@@ -141,5 +141,18 @@ class DBApiAuthService implements ServiceApiAuth
         if (!$roles)return ['response'=>false];
         if (in_array('admin',$roles)) return ['response'=>true];;
         return ['response'=>false];
+    }
+
+    public function updateUser(array $data){
+        if (User::where('id',$data['id'])->get()){
+            if (User::where('id',$data['id'])->update([
+                'name' => $data['name'],
+                'email' =>$data['email'],
+                'phones' =>$data['phones'],
+                'confirmed_client' =>$data['confirmed_client'],
+                'email_verified_at' =>(int)$data['email_verified_at'],
+            ])) return ['response'=>'update success'];
+        }
+        return ['response'=>'error'];
     }
 }

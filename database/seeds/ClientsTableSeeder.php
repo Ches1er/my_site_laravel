@@ -17,12 +17,14 @@ class ClientsTableSeeder extends Seeder
                 'name'=> 'Клиент 1',
                 'img' => 1,
                 'desc' => 'Описание клиента упаковочных материалов номер 1',
+                'products'=>'1',
                 'sales_area_id' => 1
             ],
             [
                 'name'=> 'Клиент 2',
                 'img' => 1,
                 'desc' => 'Описание клиента упаковочных материалов номер 2',
+                'products'=>'1',
                 'sales_area_id' => 1
             ]
         ]);

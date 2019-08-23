@@ -84,7 +84,16 @@ class DBApiAuthService implements ServiceApiAuth
             return ['response'=>'Registration succeed'];
         };
         return ['response'=>'Registration error'];
+    }
 
+    public function repeatVerification(string $api_token){
+        // -- MAIL -->
+        MailConfigs::instance()->verificationEmail();
+        $user = User::where('api_token',$api_token)->first();
+
+        Mail::to($user->email)
+            ->send(new ConfirmationEmail(['name'=>$user->name,'verification_token'=>$user->verification_token]));
+        return ['response'=>'Letter has sent'];
     }
 
     public function mail_verification(string $verification_token)
@@ -106,14 +115,14 @@ class DBApiAuthService implements ServiceApiAuth
             });
         }
         catch (\Exception $e){
-            return false;
+            return ['response'=>'error'];
         }
         $user = User::where('verification_token', $verification_token)->first();
             // -- MAIL -->
             MailConfigs::instance()->verificationEmail();
             Mail::to($user->email)
                 ->send(new ConfirmationEmailSuccess(['name'=>$user->name]));
-            return true;
+            return ['response'=>'Verification completed'];
     }
 
     // -- OTHER

@@ -20,4 +20,6 @@ interface ServiceApiAuth
     public function roles(string $api_token);
     public function isAdmin(string $api_token);
     public function updateUser(array $data);
+    public function repeatVerification(string $api_token);
+
 }

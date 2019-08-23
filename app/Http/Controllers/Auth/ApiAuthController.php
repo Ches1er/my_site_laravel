@@ -34,6 +34,10 @@ class ApiAuthController extends Controller
         $passport = $request->only('name','email','password','phones','confirmedClient');
         return json_encode($this->authService->register($passport));
     }
+    public function actionRepeatVerEmail(Request $request){
+        $server_request = $request->only('api_token');
+        return json_encode($this->authService->repeatVerification($server_request['api_token']));
+    }
 
     public function actionEmailVerification($verificationtoken){
         if($this->authService->mail_verification($verificationtoken)){

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Main;
 use App\Contracts\ServiceApiObjects;
 use App\Http\Controllers\Controller;
 use App\MyTraits\getObjWithImagesPath;
+use Illuminate\Http\Request;
 
 class ApiObjectsController extends Controller
 {
@@ -28,5 +29,9 @@ class ApiObjectsController extends Controller
     public function actionShowObjects(){
         $objs = $this->objService->objects();
         return json_encode($objs);
+    }
+    public function actionAddObject(Request $request){
+        $data = $request->only('action','id','name','desc','img');
+        return json_encode($this->objService->addObject($data));
     }
 }

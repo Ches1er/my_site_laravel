@@ -14,4 +14,5 @@ interface ServiceApiSale
     public function showProducts();
     public function showProduct(int $id);
     public function getExchange(int $brandid);
+    public function showProductsByBrand(int $brandid);
 }

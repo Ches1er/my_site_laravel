@@ -18,7 +18,7 @@ class DBApiSaleService implements ServiceApiSale
     private function getUahPrice($obj){
         foreach ($obj as $obj_unit){
             $brand_exchange = Brand_exchange::where('brand_id',$obj_unit->brand_id)->first();
-            $obj_unit->price = $obj_unit->price*$brand_exchange->exchange;
+            $obj_unit->price = round($obj_unit->price*$brand_exchange->exchange, 2);
         }
         return $obj;
     }
@@ -36,5 +36,10 @@ class DBApiSaleService implements ServiceApiSale
     public function getExchange(int $brandid)
     {
         return Brand_exchange::where('brand_id',$brandid)->get();
+    }
+
+    public function showProductsByBrand(int $brandid)
+    {
+        return $this->getUahPrice(Product_sale::where('brand_id', $brandid)->get());
     }
 }

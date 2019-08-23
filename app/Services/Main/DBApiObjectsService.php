@@ -29,7 +29,20 @@ class DBApiObjectsService implements ServiceApiObjects
 
     public function addObject(array $data)
     {
-        // TODO: Implement addObject() method.
+        if (!$data['img']){
+            $default_image = Image::where('name','default_news')->first();
+            $data['img'] = $default_image->id;
+        }
+        if (Build_object::where('name',$data['name'])->first() && $data['action']==='add')return ['response'=>'this object exists'];
+        if (Build_object::updateOrCreate(['id'=> $data['id']],[
+            'name'=>$data['name'],
+            'desc'=>$data['desc'],
+            'img'=>$data['img']
+        ])) {
+            if ($data['action']==='update')return ['response'=>'update success'];
+            return ['response'=>'insert success'];
+        };
+        return ['response'=>'error'];
     }
 
     public function delObject(int $id)

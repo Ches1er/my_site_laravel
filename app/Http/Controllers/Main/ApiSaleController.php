@@ -27,4 +27,7 @@ class ApiSaleController extends Controller
     public function actionGetBrandExchange(int $brand_id){
         return json_encode($this->salesService->getExchange($brand_id));
     }
+    public function actionShowProductsByBrand($brandid){
+        return json_encode($this->salesService->showProductsByBrand($brandid));
+    }
 }

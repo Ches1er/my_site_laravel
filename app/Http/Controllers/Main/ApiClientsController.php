@@ -26,7 +26,7 @@ class ApiClientsController extends Controller
         return json_encode($this->clientsService->clients($sales_ares));
     }
     public function actionAddClient(Request $request){
-        $data = $request->only('id','action','name', 'desc', 'salesArea','img');
+        $data = $request->only('id','action','name', 'desc', 'salesArea','img','products');
         return json_encode($this->clientsService->addClient($data));
     }
 }

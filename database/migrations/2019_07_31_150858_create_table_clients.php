@@ -18,6 +18,7 @@ class CreateTableClients extends Migration
             $table->string('name');
             $table->bigInteger('img');
             $table->mediumText('desc');
+            $table->string('products');
             $table->bigInteger('sales_area_id')->unsigned();
             $table->timestamps();
 

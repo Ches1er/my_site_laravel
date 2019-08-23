@@ -28,14 +28,14 @@ trait getObjWithImagesPath
         if ($objects){
             foreach ($objects as $object){
                 $img_id = $object->img;
+                $object->img_id = $img_id;
                 $img_id_array = explode(',',$img_id);
-                $object->img_id = $img_id_array;
                                 $path_array = [];
                                 foreach ($img_id_array as $img){
                                     $img_path = Image::where('id',(int) $img)->first();
                                     array_push($path_array, $img_path->path);
                                 }
-                $object->img = $path_array;
+                $object->img = implode(',',$path_array);
             }
         }
         return $objects;

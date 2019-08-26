@@ -114,6 +114,8 @@ Route::prefix('sales')->group(function(){
     // Products
     Route::get('/products', 'Main\ApiSaleController@actionShowProducts');
     Route::get('/products/{brandid?}', 'Main\ApiSaleController@actionShowProductsByBrand');
+    Route::post('/save', 'Main\ApiSaleController@actionSaveOrder');
+    Route::post('/sendorder', 'Main\ApiSaleController@actionSendOrderByEmail');
 });
 
 

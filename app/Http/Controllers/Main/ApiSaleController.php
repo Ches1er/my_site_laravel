@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Main;
 
 use App\Contracts\ServiceApiSale;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class ApiSaleController extends Controller
 {
@@ -29,5 +30,13 @@ class ApiSaleController extends Controller
     }
     public function actionShowProductsByBrand($brandid){
         return json_encode($this->salesService->showProductsByBrand($brandid));
+    }
+    public function actionSaveOrder(Request $request){
+        $data = $request->only('id','order','userId','date');
+        return json_encode($this->salesService->saveOrder($data));
+    }
+    public function actionSendOrderByEmail(Request $request) {
+        $data = $request->only('userId','order','amount');
+        return json_encode($this->salesService->sendOrderByEmail($data));
     }
 }

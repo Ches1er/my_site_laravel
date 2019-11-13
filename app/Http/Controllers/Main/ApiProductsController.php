@@ -52,14 +52,17 @@ class ApiProductsController extends Controller
         return json_encode($this->brandsService
             ->showBrands($salesarea));
     }
+    public function actionShowExchanges(){
+        return json_encode($this->brandsService->showExchanges());
+    }
 
     public function actionAddBrand(Request $request){
         /* Client give us request without img, in service set img by default
         * In perspective we can send with request img.
         */
         $action = $request->only('action');
-        if ($action['action'] === 'add') $data = $request->only('name','sales_area','action','official','web');
-        if ($action['action'] === 'update') $data = $request->only('id','name','sales_area','action','active','official','web');
+        if ($action['action'] === 'add') $data = $request->only('name','sales_area','action','official','web','exchange');
+        if ($action['action'] === 'update') $data = $request->only('id','name','sales_area','action','active','official','web','exchange');
         return json_encode($this->brandsService->addBrand($data));
     }
 

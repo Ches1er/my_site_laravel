@@ -2,11 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use App\Configs\RedirectUrlConfigs;
-use App\User;
 use Closure;
 
-class isAuth
+class PreflightResponseMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,8 +15,9 @@ class isAuth
      */
     public function handle($request, Closure $next)
     {
-        $api_token =  $request->bearerToken();
-        if (User::where('api_token',$api_token)->get())return $next($request);
-        return redirect(RedirectUrlConfigs::ROOT);
+        if ($request->getMethod() === "OPTIONS") {
+            return response('');
+        }
+        return $next($request);
     }
 }

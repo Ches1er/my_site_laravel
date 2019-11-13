@@ -27,7 +27,14 @@ use Illuminate\Support\Str;
 class DBApiAuthService implements ServiceApiAuth
 {
     private function apiToken(User $user){
-        return Crypt::encrypt(json_encode($user->Roles()));
+
+        $header = json_encode((object)['alg'=>'HS256', 'typ'=>'JWT']);
+        $payload = json_encode((object)['roles'=>$user->Roles()]);
+        $base64UrlHeader = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($header));
+        $base64UrlPayload = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($payload));
+        $signature = hash_hmac('sha256', $base64UrlHeader . "." . $base64UrlPayload, 'secret', true);
+        $base64UrlSignature = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($signature));
+        return $base64UrlHeader.'.'.$base64UrlPayload.'.'.$base64UrlSignature;
     }
 
     // -- LOGIN
@@ -148,7 +155,7 @@ class DBApiAuthService implements ServiceApiAuth
     {
         $roles =  json_decode($this->roles($api_token));
         if (!$roles)return ['response'=>false];
-        if (in_array('admin',$roles)) return ['response'=>true];;
+        if (in_array('admin',$roles)) return ['response'=>true];
         return ['response'=>false];
     }
 

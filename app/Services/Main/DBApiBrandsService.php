@@ -12,6 +12,7 @@ namespace App\Services\Main;
 use App\Configs\SalesAreaConfigs;
 use App\Contracts\ServiceApiBrands;
 use App\Models\Brand;
+use App\Models\Brand_exchange;
 use App\Models\Sales_area;
 
 class DBApiBrandsService implements ServiceApiBrands
@@ -42,7 +43,11 @@ class DBApiBrandsService implements ServiceApiBrands
                 'active' => 1,
                 'official'=>(int)($data['official']==true),
                 'web'=>$data['web']
-            ])) return ['response'=>'insert success'];
+            ])) {
+                $brand_id_obj = Brand::where('name', $data['name'])->first();
+                Brand_exchange::create(['brand_id' => $brand_id_obj->brand_id, 'exchange' => (float)$data['exchange']]);
+                return ['response'=>'insert success'];
+            }
         }
         if ($data['action']==='update'){
             if (Brand::where('id',$data['id'])->update([
@@ -51,7 +56,15 @@ class DBApiBrandsService implements ServiceApiBrands
                 'active' => (int)($data['active']==true),
                 'official'=>(int)($data['official']==true),
                 'web'=>$data['web']
-            ])) return ['response'=>'update success'];
+            ])) {
+                $brand_id_obj = Brand::where('name', $data['name'])->first();
+                if (Brand_exchange::where(['brand_id' => $brand_id_obj->id])->first()){
+                    Brand_exchange::where(['brand_id' => $brand_id_obj->id])->update(['exchange' => (float)$data['exchange']]);
+                } else {
+                    Brand_exchange::create(['brand_id' => $brand_id_obj->id, 'exchange' => (float)$data['exchange']]);
+                }
+                return ['response'=>'update success'];
+            }
         }
         return ['response'=>'error'];
     }
@@ -60,5 +73,14 @@ class DBApiBrandsService implements ServiceApiBrands
     {
         Brand::destroy($id);
         return ['response'=>'success'];
+    }
+    public function addUpdateExchange(array $data)
+    {
+        // TODO: Implement addExchange() method.
+    }
+
+    public function showExchanges()
+    {
+        return Brand_exchange::all();
     }
 }

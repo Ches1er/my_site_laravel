@@ -29,7 +29,7 @@ module.exports = "<ul class=\"admin_nav\">\n  <li><a routerLink=\"profile_main\"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>profile-orders works!</p>\n"
+module.exports = "<div class=\"order_main_content\">\n  <div class=\"main_content_header\">Ваши заказы:</div>\n  <div class=\"order_main_content_block\">\n    <div class=\"order_content_block_header\" *ngIf=\"!ordersArr\">У вас пока нет ни одного заказа.</div>\n    <div class=\"order_content_block_header\" *ngIf=\"ordersArr\">У вас есть следующие заказы:</div>\n    <div class=\"orders_content_all_orders\" *ngIf=\"ordersArr\">\n      <table class=\"orders_content_all_order\" *ngFor=\"let order of ordersArr; let i = index\">\n        <caption>Ваш заказ № {{i+1}}</caption>\n        <tr>\n          <th>Бренд</th>\n          <th>Номенклатура</th>\n          <th>Стоимость, грн</th>\n          <th>Кол-во, шт</th>\n          <th>Всего</th>\n        </tr>\n        <tr *ngFor=\"let orderItem of order\">\n          <td>{{orderItem.brand}}</td>\n          <td>{{orderItem.productName}}</td>\n          <td>{{orderItem.price}}</td>\n          <td>{{orderItem.qty}}</td>\n          <td>{{orderItem.amount}}</td>\n          <!--<td class=\"td-btn\"><button class=\"btn\" (click)=\"delOrderPos(i)\"><i class=\"fa fa-trash\"></i></button></td> -->\n        </tr>\n      </table>\n    </div>\n  </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -62,11 +62,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _profile_profile_main_profile_main_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./profile/profile-main/profile-main.component */ "./src/app/modules/profile/profile/profile-main/profile-main.component.ts");
 /* harmony import */ var _profile_profile_orders_profile_orders_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./profile/profile-orders/profile-orders.component */ "./src/app/modules/profile/profile/profile-orders/profile-orders.component.ts");
 /* harmony import */ var _profile_profile_nav_profile_nav_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./profile/profile-nav/profile-nav.component */ "./src/app/modules/profile/profile/profile-nav/profile-nav.component.ts");
-/* harmony import */ var _services_http_http_auth_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../services/http/http-auth.service */ "./src/app/services/http/http-auth.service.ts");
-/* harmony import */ var ngx_cookie_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ngx-cookie-service */ "./node_modules/ngx-cookie-service/ngx-cookie-service.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
-
-
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
 
 
 
@@ -92,9 +88,9 @@ ProfileModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
         declarations: [_profile_profile_component__WEBPACK_IMPORTED_MODULE_4__["ProfileComponent"], _profile_profile_main_profile_main_component__WEBPACK_IMPORTED_MODULE_5__["ProfileMainComponent"], _profile_profile_nav_profile_nav_component__WEBPACK_IMPORTED_MODULE_7__["ProfileNavComponent"], _profile_profile_orders_profile_orders_component__WEBPACK_IMPORTED_MODULE_6__["ProfileOrdersComponent"]],
         imports: [
-            _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouterModule"].forChild(routes), _angular_forms__WEBPACK_IMPORTED_MODULE_10__["ReactiveFormsModule"]
+            _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouterModule"].forChild(routes), _angular_forms__WEBPACK_IMPORTED_MODULE_8__["ReactiveFormsModule"]
         ],
-        providers: [_services_http_http_auth_service__WEBPACK_IMPORTED_MODULE_8__["HttpAuthService"], ngx_cookie_service__WEBPACK_IMPORTED_MODULE_9__["CookieService"]]
+        providers: []
     })
 ], ProfileModule);
 
@@ -126,43 +122,55 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _services_http_http_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../services/http/http-auth.service */ "./src/app/services/http/http-auth.service.ts");
-/* harmony import */ var ngx_cookie_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ngx-cookie-service */ "./node_modules/ngx-cookie-service/ngx-cookie-service.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
-
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
 
 
 
 
 let ProfileMainComponent = class ProfileMainComponent {
-    constructor(httpAuthService, cookieService) {
+    constructor(httpAuthService) {
         this.httpAuthService = httpAuthService;
-        this.cookieService = cookieService;
-        this.profileForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormGroup"]({
-            id: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"](''),
-            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required,
-                _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].pattern('[a-zA-Z0-9-_]+'),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].minLength(3)
+        this.profileForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormGroup"]({
+            id: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"](''),
+            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].pattern('[a-zA-Z0-9-_]+'),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].minLength(3)
             ]),
-            email: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required,
-                _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9]+\\.[.a-zA-Z0-9]+$')
+            email: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9]+\\.[.a-zA-Z0-9]+$')
             ]),
-            phones: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormArray"]([]),
-            confirmedClient: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"](''),
-            emailVerifiedAt: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"]('')
+            phones: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormArray"]([]),
+            confirmedClient: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"](''),
+            emailVerifiedAt: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('')
         });
-        this.pCurrentUser = null;
+        this.pToken = null;
+    }
+    get token() {
+        return this.pToken;
+    }
+    set token(value) {
+        this.pToken = value;
     }
     ngOnInit() {
+        this.getToken();
         this.updateUser();
     }
     updateUser() {
         this.profileForm.controls.phones.clear();
-        this.httpAuthService.user(this.cookieService.get('api_token')).subscribe(user => {
+        this.httpAuthService.user(this.token).subscribe(user => {
             this.currentUser = user;
             this.fillInForm(user);
         });
+    }
+    getToken() {
+        if (localStorage.length > 0) {
+            const data = JSON.parse(localStorage.getItem('tokenData'));
+            if (data.api_token) {
+                this.token = data.api_token;
+            }
+        }
     }
     get currentUser() {
         return this.pCurrentUser;
@@ -187,7 +195,7 @@ let ProfileMainComponent = class ProfileMainComponent {
         const phones = user.phones.split(',');
         const formPhones = this.profileForm.controls.phones;
         phones.map(e => {
-            formPhones.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"](e, [_angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].pattern('\\+[0-9]{12}')]));
+            formPhones.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"](e, [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].pattern('\\+[0-9]{12}')]));
         });
     }
     onSubmit() {
@@ -207,7 +215,7 @@ let ProfileMainComponent = class ProfileMainComponent {
     AddPhone(event) {
         event.preventDefault();
         this.profileForm.controls.phones
-            .push(new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"]('+380', [_angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].pattern('\\+[0-9]{12}')]));
+            .push(new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('+380', [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].pattern('\\+[0-9]{12}')]));
     }
     sendVerificationEmail(event) {
         event.preventDefault();
@@ -219,8 +227,7 @@ let ProfileMainComponent = class ProfileMainComponent {
     }
 };
 ProfileMainComponent.ctorParameters = () => [
-    { type: _services_http_http_auth_service__WEBPACK_IMPORTED_MODULE_2__["HttpAuthService"] },
-    { type: ngx_cookie_service__WEBPACK_IMPORTED_MODULE_3__["CookieService"] }
+    { type: _services_http_http_auth_service__WEBPACK_IMPORTED_MODULE_2__["HttpAuthService"] }
 ];
 ProfileMainComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -228,7 +235,7 @@ ProfileMainComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         template: __webpack_require__(/*! raw-loader!./profile-main.component.html */ "./node_modules/raw-loader/index.js!./src/app/modules/profile/profile/profile-main/profile-main.component.html"),
         styles: [__webpack_require__(/*! ./profile-main.component.less */ "./src/app/modules/profile/profile/profile-main/profile-main.component.less")]
     }),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_http_http_auth_service__WEBPACK_IMPORTED_MODULE_2__["HttpAuthService"], ngx_cookie_service__WEBPACK_IMPORTED_MODULE_3__["CookieService"]])
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_http_http_auth_service__WEBPACK_IMPORTED_MODULE_2__["HttpAuthService"]])
 ], ProfileMainComponent);
 
 
@@ -278,14 +285,14 @@ ProfileNavComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 /***/ }),
 
-/***/ "./src/app/modules/profile/profile/profile-orders/profile-orders.component.css":
-/*!*************************************************************************************!*\
-  !*** ./src/app/modules/profile/profile/profile-orders/profile-orders.component.css ***!
-  \*************************************************************************************/
+/***/ "./src/app/modules/profile/profile/profile-orders/profile-orders.component.less":
+/*!**************************************************************************************!*\
+  !*** ./src/app/modules/profile/profile/profile-orders/profile-orders.component.less ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL21vZHVsZXMvcHJvZmlsZS9wcm9maWxlL3Byb2ZpbGUtb3JkZXJzL3Byb2ZpbGUtb3JkZXJzLmNvbXBvbmVudC5jc3MifQ== */"
+module.exports = ".order_content_block_header {\n  margin-top: 10px;\n  width: 100%;\n  padding: 0 0 10px 0;\n  font-size: 1.3em;\n  color: #505050;\n  font-family: 'Oswald', sans-serif;\n}\n.orders_content_all_orders {\n  width: 50%;\n}\n.orders_content_all_orders table {\n  border-radius: 3px;\n  margin-top: 10px;\n  padding: 5px;\n  width: 100%;\n  color: #505050;\n  border-collapse: collapse;\n  font-family: \"Lucida Sans Unicode\", \"Lucida Grande\", Sans-Serif;\n  font-size: 0.9em;\n}\n.orders_content_all_orders table caption {\n  font-size: 1.2em;\n}\n.orders_content_all_orders table th {\n  text-align: center;\n  padding: 5px 10px;\n  background-color: #325c8e;\n  color: white;\n  border-style: solid;\n  border-width: 0 1px 1px 0;\n  border-color: white;\n}\n.orders_content_all_orders table td:first-child {\n  text-align: center;\n  padding: 5px 10px;\n  background-color: #325c8e;\n  color: white;\n}\n.orders_content_all_orders table td {\n  border-style: solid;\n  border-width: 0 1px 1px 0;\n  border-color: white;\n  text-align: center;\n  padding: 3px 5px;\n  background: #D8E6F3;\n}\n.orders_content_all_orders table .td-btn {\n  border: none;\n  background: none;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbW9kdWxlcy9wcm9maWxlL3Byb2ZpbGUvcHJvZmlsZS1vcmRlcnMvQzovVXNlcnMvSXZhbi9EZXNrdG9wL3NpdGUvbWFyYWZvbk5nL21hcmFmb24vc3JjL2FwcC9tb2R1bGVzL3Byb2ZpbGUvcHJvZmlsZS9wcm9maWxlLW9yZGVycy9wcm9maWxlLW9yZGVycy5jb21wb25lbnQubGVzcyIsInNyYy9hcHAvbW9kdWxlcy9wcm9maWxlL3Byb2ZpbGUvcHJvZmlsZS1vcmRlcnMvcHJvZmlsZS1vcmRlcnMuY29tcG9uZW50Lmxlc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxnQkFBQTtFQUNBLFdBQUE7RUFDQSxtQkFBQTtFQUNBLGdCQUFBO0VBQ0EsY0FBQTtFQUNBLGlDQUFBO0FDQ0Y7QURDQTtFQUNFLFVBQUE7QUNDRjtBREZBO0VBR0ksa0JBQUE7RUFDQSxnQkFBQTtFQUNBLFlBQUE7RUFDQSxXQUFBO0VBQ0EsY0FBQTtFQUNBLHlCQUFBO0VBQ0EsK0RBQUE7RUFDQSxnQkFBQTtBQ0VKO0FEWkE7RUFZTSxnQkFBQTtBQ0dOO0FEZkE7RUFpQk0sa0JBQUE7RUFDQSxpQkFBQTtFQUNBLHlCQUFBO0VBQ0EsWUFBQTtFQUNBLG1CQUFBO0VBQ0EseUJBQUE7RUFDQSxtQkFBQTtBQ0NOO0FEeEJBO0VBMEJNLGtCQUFBO0VBQ0EsaUJBQUE7RUFDQSx5QkFBQTtFQUNBLFlBQUE7QUNDTjtBRDlCQTtFQWdDTSxtQkFBQTtFQUNBLHlCQUFBO0VBQ0EsbUJBQUE7RUFDQSxrQkFBQTtFQUNBLGdCQUFBO0VBQ0EsbUJBQUE7QUNDTjtBRHRDQTtFQXdDTSxZQUFBO0VBQ0EsZ0JBQUE7QUNDTiIsImZpbGUiOiJzcmMvYXBwL21vZHVsZXMvcHJvZmlsZS9wcm9maWxlL3Byb2ZpbGUtb3JkZXJzL3Byb2ZpbGUtb3JkZXJzLmNvbXBvbmVudC5sZXNzIiwic291cmNlc0NvbnRlbnQiOlsiLm9yZGVyX2NvbnRlbnRfYmxvY2tfaGVhZGVyIHtcbiAgbWFyZ2luLXRvcDogMTBweDtcbiAgd2lkdGg6IDEwMCU7XG4gIHBhZGRpbmc6IDAgMCAxMHB4IDA7XG4gIGZvbnQtc2l6ZTogMS4zZW07XG4gIGNvbG9yOiAjNTA1MDUwO1xuICBmb250LWZhbWlseTogJ09zd2FsZCcsIHNhbnMtc2VyaWY7XG59XG4ub3JkZXJzX2NvbnRlbnRfYWxsX29yZGVyc3tcbiAgd2lkdGg6IDUwJTtcbiAgdGFibGV7XG4gICAgYm9yZGVyLXJhZGl1czogM3B4O1xuICAgIG1hcmdpbi10b3A6IDEwcHg7XG4gICAgcGFkZGluZzogNXB4O1xuICAgIHdpZHRoOiAxMDAlO1xuICAgIGNvbG9yOiAjNTA1MDUwO1xuICAgIGJvcmRlci1jb2xsYXBzZTogY29sbGFwc2U7XG4gICAgZm9udC1mYW1pbHk6IFwiTHVjaWRhIFNhbnMgVW5pY29kZVwiLCBcIkx1Y2lkYSBHcmFuZGVcIiwgU2Fucy1TZXJpZjtcbiAgICBmb250LXNpemU6IDAuOWVtO1xuICAgIGNhcHRpb257XG4gICAgICBmb250LXNpemU6IDEuMmVtO1xuICAgIH1cbiAgICB0cjpmaXJzdC1jaGlsZCB7XG4gICAgfVxuICAgIHRoIHtcbiAgICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgICAgIHBhZGRpbmc6IDVweCAxMHB4O1xuICAgICAgYmFja2dyb3VuZC1jb2xvcjogIzMyNWM4ZTtcbiAgICAgIGNvbG9yOiB3aGl0ZTtcbiAgICAgIGJvcmRlci1zdHlsZTogc29saWQ7XG4gICAgICBib3JkZXItd2lkdGg6IDAgMXB4IDFweCAwO1xuICAgICAgYm9yZGVyLWNvbG9yOiB3aGl0ZTtcbiAgICB9XG4gICAgdGQ6Zmlyc3QtY2hpbGR7XG4gICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gICAgICBwYWRkaW5nOiA1cHggMTBweDtcbiAgICAgIGJhY2tncm91bmQtY29sb3I6ICMzMjVjOGU7XG4gICAgICBjb2xvcjogd2hpdGU7XG4gICAgfVxuICAgIHRke1xuICAgICAgYm9yZGVyLXN0eWxlOiBzb2xpZDtcbiAgICAgIGJvcmRlci13aWR0aDogMCAxcHggMXB4IDA7XG4gICAgICBib3JkZXItY29sb3I6IHdoaXRlO1xuICAgICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgICAgcGFkZGluZzogM3B4IDVweDtcbiAgICAgIGJhY2tncm91bmQ6ICNEOEU2RjM7XG4gICAgfVxuICAgIC50ZC1idG57XG4gICAgICBib3JkZXI6IG5vbmU7XG4gICAgICBiYWNrZ3JvdW5kOiBub25lO1xuICAgIH1cbiAgfVxuXG59XG4iLCIub3JkZXJfY29udGVudF9ibG9ja19oZWFkZXIge1xuICBtYXJnaW4tdG9wOiAxMHB4O1xuICB3aWR0aDogMTAwJTtcbiAgcGFkZGluZzogMCAwIDEwcHggMDtcbiAgZm9udC1zaXplOiAxLjNlbTtcbiAgY29sb3I6ICM1MDUwNTA7XG4gIGZvbnQtZmFtaWx5OiAnT3N3YWxkJywgc2Fucy1zZXJpZjtcbn1cbi5vcmRlcnNfY29udGVudF9hbGxfb3JkZXJzIHtcbiAgd2lkdGg6IDUwJTtcbn1cbi5vcmRlcnNfY29udGVudF9hbGxfb3JkZXJzIHRhYmxlIHtcbiAgYm9yZGVyLXJhZGl1czogM3B4O1xuICBtYXJnaW4tdG9wOiAxMHB4O1xuICBwYWRkaW5nOiA1cHg7XG4gIHdpZHRoOiAxMDAlO1xuICBjb2xvcjogIzUwNTA1MDtcbiAgYm9yZGVyLWNvbGxhcHNlOiBjb2xsYXBzZTtcbiAgZm9udC1mYW1pbHk6IFwiTHVjaWRhIFNhbnMgVW5pY29kZVwiLCBcIkx1Y2lkYSBHcmFuZGVcIiwgU2Fucy1TZXJpZjtcbiAgZm9udC1zaXplOiAwLjllbTtcbn1cbi5vcmRlcnNfY29udGVudF9hbGxfb3JkZXJzIHRhYmxlIGNhcHRpb24ge1xuICBmb250LXNpemU6IDEuMmVtO1xufVxuLm9yZGVyc19jb250ZW50X2FsbF9vcmRlcnMgdGFibGUgdGgge1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gIHBhZGRpbmc6IDVweCAxMHB4O1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjMzI1YzhlO1xuICBjb2xvcjogd2hpdGU7XG4gIGJvcmRlci1zdHlsZTogc29saWQ7XG4gIGJvcmRlci13aWR0aDogMCAxcHggMXB4IDA7XG4gIGJvcmRlci1jb2xvcjogd2hpdGU7XG59XG4ub3JkZXJzX2NvbnRlbnRfYWxsX29yZGVycyB0YWJsZSB0ZDpmaXJzdC1jaGlsZCB7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgcGFkZGluZzogNXB4IDEwcHg7XG4gIGJhY2tncm91bmQtY29sb3I6ICMzMjVjOGU7XG4gIGNvbG9yOiB3aGl0ZTtcbn1cbi5vcmRlcnNfY29udGVudF9hbGxfb3JkZXJzIHRhYmxlIHRkIHtcbiAgYm9yZGVyLXN0eWxlOiBzb2xpZDtcbiAgYm9yZGVyLXdpZHRoOiAwIDFweCAxcHggMDtcbiAgYm9yZGVyLWNvbG9yOiB3aGl0ZTtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xuICBwYWRkaW5nOiAzcHggNXB4O1xuICBiYWNrZ3JvdW5kOiAjRDhFNkYzO1xufVxuLm9yZGVyc19jb250ZW50X2FsbF9vcmRlcnMgdGFibGUgLnRkLWJ0biB7XG4gIGJvcmRlcjogbm9uZTtcbiAgYmFja2dyb3VuZDogbm9uZTtcbn1cbiJdfQ== */"
 
 /***/ }),
 
@@ -301,20 +308,90 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProfileOrdersComponent", function() { return ProfileOrdersComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _services_http_sale_sale_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../services/http/sale/sale.service */ "./src/app/services/http/sale/sale.service.ts");
+/* harmony import */ var _shared_order_OrderUnit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../shared/order/OrderUnit */ "./src/app/modules/shared/order/OrderUnit.ts");
+/* harmony import */ var _services_http_http_auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../services/http/http-auth.service */ "./src/app/services/http/http-auth.service.ts");
+
+
+
 
 
 let ProfileOrdersComponent = class ProfileOrdersComponent {
-    constructor() { }
+    constructor(saleService, httpAuthService) {
+        this.saleService = saleService;
+        this.httpAuthService = httpAuthService;
+        this.pOrdersStr = null;
+        this.pToken = null;
+    }
+    get ordersArr() {
+        return this.pOrdersArr;
+    }
+    set ordersArr(value) {
+        this.pOrdersArr = value;
+    }
+    get ordersStr() {
+        return this.pOrdersStr;
+    }
+    set ordersStr(value) {
+        this.pOrdersStr = value;
+    }
+    get token() {
+        return this.pToken;
+    }
+    set token(value) {
+        this.pToken = value;
+    }
+    get currentUser() {
+        return this.pCurrentUser;
+    }
+    set currentUser(value) {
+        this.pCurrentUser = value;
+    }
     ngOnInit() {
+        this.getToken();
+        this.updateUser();
+    }
+    getToken() {
+        if (localStorage.length > 0) {
+            const data = JSON.parse(localStorage.getItem('tokenData'));
+            if (data.api_token) {
+                this.token = data.api_token;
+            }
+        }
+    }
+    updateUser() {
+        this.httpAuthService.user(this.token).subscribe(user => {
+            this.currentUser = user;
+            // Get orders
+            this.saleService.showOrders(user.id).subscribe(resp => {
+                this.ordersStr = resp;
+                this.strToArr(resp);
+            });
+        });
+    }
+    strToArr(orderStr) {
+        const arr = [];
+        let newArr = [];
+        orderStr.orders.map(e => {
+            arr.push(e.split(';'));
+        });
+        newArr = arr.map(e => {
+            return e.map(elem => new _shared_order_OrderUnit__WEBPACK_IMPORTED_MODULE_3__["OrderUnit"](JSON.parse(elem).brandId, JSON.parse(elem).brand, JSON.parse(elem).productId, JSON.parse(elem).productName, JSON.parse(elem).price, JSON.parse(elem).qty, JSON.parse(elem).amount));
+        });
+        this.ordersArr = newArr;
     }
 };
+ProfileOrdersComponent.ctorParameters = () => [
+    { type: _services_http_sale_sale_service__WEBPACK_IMPORTED_MODULE_2__["SaleService"] },
+    { type: _services_http_http_auth_service__WEBPACK_IMPORTED_MODULE_4__["HttpAuthService"] }
+];
 ProfileOrdersComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
         selector: 'app-profile-orders',
         template: __webpack_require__(/*! raw-loader!./profile-orders.component.html */ "./node_modules/raw-loader/index.js!./src/app/modules/profile/profile/profile-orders/profile-orders.component.html"),
-        styles: [__webpack_require__(/*! ./profile-orders.component.css */ "./src/app/modules/profile/profile/profile-orders/profile-orders.component.css")]
+        styles: [__webpack_require__(/*! ./profile-orders.component.less */ "./src/app/modules/profile/profile/profile-orders/profile-orders.component.less")]
     }),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_http_sale_sale_service__WEBPACK_IMPORTED_MODULE_2__["SaleService"], _services_http_http_auth_service__WEBPACK_IMPORTED_MODULE_4__["HttpAuthService"]])
 ], ProfileOrdersComponent);
 
 
@@ -345,19 +422,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _services_http_http_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../services/http/http-auth.service */ "./src/app/services/http/http-auth.service.ts");
-/* harmony import */ var ngx_cookie_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ngx-cookie-service */ "./node_modules/ngx-cookie-service/ngx-cookie-service.js");
-
 
 
 
 let ProfileComponent = class ProfileComponent {
-    constructor(httpAuthService, cookieService) {
+    constructor(httpAuthService) {
         this.httpAuthService = httpAuthService;
-        this.cookieService = cookieService;
         this.pCurrentUser = null;
     }
     ngOnInit() {
-        this.httpAuthService.user(this.cookieService.get('api_token')).subscribe(user => this.currentUser = user);
+        this.getUser();
     }
     get currentUser() {
         return this.pCurrentUser;
@@ -365,10 +439,20 @@ let ProfileComponent = class ProfileComponent {
     set currentUser(value) {
         this.pCurrentUser = value;
     }
+    getUser() {
+        if (localStorage.length > 0) {
+            const data = JSON.parse(localStorage.getItem('tokenData'));
+            this.httpAuthService.user(data.api_token)
+                .subscribe(u => {
+                if (u) {
+                    this.currentUser = u;
+                }
+            });
+        }
+    }
 };
 ProfileComponent.ctorParameters = () => [
-    { type: _services_http_http_auth_service__WEBPACK_IMPORTED_MODULE_2__["HttpAuthService"] },
-    { type: ngx_cookie_service__WEBPACK_IMPORTED_MODULE_3__["CookieService"] }
+    { type: _services_http_http_auth_service__WEBPACK_IMPORTED_MODULE_2__["HttpAuthService"] }
 ];
 ProfileComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -376,7 +460,7 @@ ProfileComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         template: __webpack_require__(/*! raw-loader!./profile.component.html */ "./node_modules/raw-loader/index.js!./src/app/modules/profile/profile/profile.component.html"),
         styles: [__webpack_require__(/*! ./profile.component.less */ "./src/app/modules/profile/profile/profile.component.less")]
     }),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_http_http_auth_service__WEBPACK_IMPORTED_MODULE_2__["HttpAuthService"], ngx_cookie_service__WEBPACK_IMPORTED_MODULE_3__["CookieService"]])
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_http_http_auth_service__WEBPACK_IMPORTED_MODULE_2__["HttpAuthService"]])
 ], ProfileComponent);
 
 

@@ -47,7 +47,7 @@ class ApiAuthController extends Controller
     }
 
     public function actionUser(Request $request){
-        $api_token = $request->post('api_token');
+        $api_token =  $request->bearerToken();
         return $this->authService->user($api_token);
     }
 

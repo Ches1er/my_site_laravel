@@ -14,4 +14,6 @@ interface ServiceApiBrands
     public function showBrands($sales_area);
     public function addBrand(Array $data);
     public function delBrand(int $id);
+    public function addUpdateExchange(array $data);
+    public function showExchanges();
 }

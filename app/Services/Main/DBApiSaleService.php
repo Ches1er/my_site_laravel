@@ -41,7 +41,7 @@ class DBApiSaleService implements ServiceApiSale
     private function getUahPrice($obj){
         foreach ($obj as $obj_unit){
             $brand_exchange = Brand_exchange::where('brand_id',$obj_unit->brand_id)->first();
-            $obj_unit->price = round($obj_unit->price*$brand_exchange->exchange, 2);
+            $obj_unit->price = round($obj_unit->price*$brand_exchange->exchange, 0);
         }
         return $obj;
     }
@@ -58,19 +58,20 @@ class DBApiSaleService implements ServiceApiSale
 
     public function saveOrder(array $data)
     {
-        $user = User::where('id',$data['userId'])->first();
-        $date = date("Y-m-d H:i:s",time());
+        // For email
+/*        $user = User::where('id',$data['userId'])->first();
+        $date = date("Y-m-d H:i:s",time());*/
         Order::updateOrCreate(['id'=>$data['id']],[
             'user_id'=> $data['userId'],
             'date'=> $data['date'],
             'order'=> $data['order'],
         ]);
         // -- MAIL -->
-        MailConfigs::instance()->verificationEmail();
+/*        MailConfigs::instance()->verificationEmail();
         $order_to_array = explode(';',$data['order']);
         $order_to_array  = array_map(array($this, 'jsonDecode'),$order_to_array);
         Mail::to('myblogtestemail@gmail.com')
-            ->send(new OrderAccepted($order_to_array,$user,$date,'amount'));
+            ->send(new OrderAccepted($order_to_array,$user,$date,'amount'));*/
         return ['response'=>'insert success'];
     }
 

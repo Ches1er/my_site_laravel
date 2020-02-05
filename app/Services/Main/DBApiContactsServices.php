@@ -27,4 +27,25 @@ class DBApiContactsServices implements ServiceApiContacts
         $branches = Branch::get();
         return $this->getBranchesRole($branches);
     }
+    public function showBranchesRoles(){
+        $brR = Branch_role::get();
+        return $brR;
+    }
+
+    public function addBranch(Array $data)
+    {
+        if (Branch::where('name', $data['name'])->first()&& $data['action']==='add')return ['response'=>'this branch exists'];
+        if (Branch::updateOrCreate(['id'=>$data['id']],[
+            'name' => $data['name'],
+            'address'=>$data['address'],
+            'phone'=>$data['phone'],
+            'long'=>$data['long'],
+            'lat'=>$data['lat'],
+            'role_id' => $data['role_id']
+        ])) {
+            if ($data['action']==='update')return ['response'=>'update success'];
+            return ['response'=>'insert success'];
+        }
+        return ['response'=>'error'];
+    }
 }

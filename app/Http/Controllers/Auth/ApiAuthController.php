@@ -52,7 +52,7 @@ class ApiAuthController extends Controller
     }
 
     public function actionRoles(Request $request){
-        $api_token = $request->post('api_token');
+        $api_token = $request->bearerToken();
         return $this->authService->roles($api_token);
     }
     public function actionIsAdmin(Request $request){

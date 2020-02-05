@@ -147,7 +147,9 @@ class DBApiAuthService implements ServiceApiAuth
         if (!$api_token) return null;
         $user = User::where('api_token',$api_token)->first();
         if (empty($user)) return null;
-        return json_encode($user->Roles());
+        $user_roles = $user->Roles();
+        if (count($user_roles) === 0) $user_roles[0] = 'empty';
+        return json_encode($user_roles);
     }
 
 

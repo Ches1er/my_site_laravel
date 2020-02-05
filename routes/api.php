@@ -123,6 +123,8 @@ Route::post('images/upload_image','Main\ApiImagesController@actionUploadImage');
     //Branches
 
 Route::get('branches','Main\ApiContactsController@actionShowBranches');
+Route::get('branches/roles','Main\ApiContactsController@actionShowBranchesRoles');
+Route::middleware('hasRole:admin')->post('branches/add', 'Main\ApiContactsController@actionAddBranch');
 
     //Solutions
 Route::get('solutions','Main\ApiSolutionController@actionShowSolutions');

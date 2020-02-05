@@ -12,4 +12,6 @@ namespace App\Contracts;
 interface ServiceApiContacts
 {
     public function showBranches();
+    public function showBranchesRoles();
+    public function addBranch(Array $data);
 }

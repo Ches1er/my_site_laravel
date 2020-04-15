@@ -15,6 +15,7 @@ use App\Http\Resources\UserResource;
 use App\Mail\ConfirmationEmail;
 use App\Configs\MailConfigs;
 use App\Mail\ConfirmationEmailSuccess;
+use App\Mail\PasswordUpdatedEmail;
 use App\Models\Role;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +33,8 @@ class DBApiAuthService implements ServiceApiAuth
         $payload = json_encode((object)['roles'=>$user->Roles()]);
         $base64UrlHeader = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($header));
         $base64UrlPayload = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($payload));
-        $signature = hash_hmac('sha256', $base64UrlHeader . "." . $base64UrlPayload, 'secret', true);
+        // $signature = hash_hmac('sha256', $base64UrlHeader . "." . $base64UrlPayload, 'secret', true);
+        $signature = hash_hmac('sha256', $base64UrlHeader . "." . $base64UrlPayload, $user->name, true);
         $base64UrlSignature = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($signature));
         return $base64UrlHeader.'.'.$base64UrlPayload.'.'.$base64UrlSignature;
     }
@@ -161,7 +163,31 @@ class DBApiAuthService implements ServiceApiAuth
         return ['response'=>false];
     }
 
-    public function updateUser(array $data){
+    public function updateUser(array $data)
+    {
+        if ($data['change_pass']==='no') return $this->updateUserWithoutPass($data);
+        if ($data['change_pass']==='yes') return $this->updateUserWithPass($data);
+    }
+
+    private function updateUserWithPass(array $data){
+        if (User::where('id',$data['id'])->get()){
+            if (User::where('id',$data['id'])->update([
+                'name' => $data['name'],
+                'email' =>$data['email'],
+                'phones' =>$data['phones'],
+                'confirmed_client' =>$data['confirmed_client'],
+                'email_verified_at' =>(int)$data['email_verified_at'],
+                'password' => Hash::make($data['new_password'])
+            ])) {
+                $user_data = ['name' => $data['name'],'email'=>$data['email'],'new_password' => $data['new_password']];
+                $this->sendEmailWithNewPassword($user_data);
+                return ['response'=>'update pass success'];
+            }
+        }
+        return ['response'=>'error'];
+    }
+
+    private function updateUserWithoutPass(array $data){
         if (User::where('id',$data['id'])->get()){
             if (User::where('id',$data['id'])->update([
                 'name' => $data['name'],
@@ -173,4 +199,10 @@ class DBApiAuthService implements ServiceApiAuth
         }
         return ['response'=>'error'];
     }
+
+    private function sendEmailWithNewPassword ($user_data) {
+        MailConfigs::instance()->verificationEmail();
+        Mail::to($user_data['email'])
+            ->send(new PasswordUpdatedEmail(['name'=>$user_data['name'], 'new_password' => $user_data['new_password']]));
+}
 }

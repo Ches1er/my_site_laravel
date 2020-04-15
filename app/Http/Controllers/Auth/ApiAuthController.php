@@ -35,8 +35,9 @@ class ApiAuthController extends Controller
         return json_encode($this->authService->register($passport));
     }
     public function actionRepeatVerEmail(Request $request){
-        $server_request = $request->only('api_token');
-        return json_encode($this->authService->repeatVerification($server_request['api_token']));
+        // $server_request = $request->only('api_token');
+        $api_token =  $request->bearerToken();
+        return json_encode($this->authService->repeatVerification($api_token));
     }
 
     public function actionEmailVerification($verificationtoken){
@@ -52,15 +53,15 @@ class ApiAuthController extends Controller
     }
 
     public function actionRoles(Request $request){
-        $api_token = $request->bearerToken();
-        return $this->authService->roles($api_token);
+        $params = $request->only('api_token');
+        return $this->authService->roles($params['api_token']);
     }
     public function actionIsAdmin(Request $request){
         $params = $request->only('api_token');
         return json_encode($this->authService->isAdmin( $params['api_token']));
     }
     public function actionUpdateUser(Request $request){
-        $data = $request->only('id','name','email','phones','confirmed_client','email_verified_at');
+        $data = $request->only('id','name','email','phones','confirmed_client','email_verified_at', 'new_password','change_pass');
         return json_encode($this->authService->updateUser($data));
     }
 }

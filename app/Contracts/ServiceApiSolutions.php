@@ -13,5 +13,6 @@ interface ServiceApiSolutions
 {
     public function showSolutions();
     public function addSolution(Array $data);
+    public function findSolutions(string $findData);
     public function delSolutions($id);
 }

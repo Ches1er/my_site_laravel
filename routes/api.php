@@ -68,11 +68,13 @@ Route::middleware('isAuth')->post('update_user', 'Auth\ApiAuthController@actionU
 
 Route::get('news', 'Main\ApiNewsController@actionShowAllNews');
 Route::get('news/{salesarea}', 'Main\ApiNewsController@actionShowNews');
+Route::post('news/find', 'Main\ApiNewsController@actionShowFindedNews');
 Route::middleware('isAuth', 'hasRole:admin')->post('news/add','Main\ApiNewsController@actionAddNews');
 
     //EVENTS
 
 Route::get('events/{salesarea?}','Main\ApiEventsController@actionShowEvents');
+Route::get('events/find/{findData}','Main\ApiEventsController@actionFindEvents');
 // todo add/del route with admin middleware
 Route::middleware('isAuth', 'hasRole:admin')->post('events/add','Main\ApiEventsController@actionAddEvent');
 
@@ -100,6 +102,7 @@ Route::middleware('isAuth', 'hasRole:admin')->post('brands/add','Main\ApiProduct
     //Products
 Route::get('products/all','Main\ApiProductsController@actionShowAllProducts');
 Route::get('products/{id}','Main\ApiProductsController@actionShowProduct');
+Route::get('products/find_products/{findData}','Main\ApiProductsController@actionFindProducts');
 Route::get('products/applying/{id}','Main\ApiProductsController@actionShowProductsByApplying');
 Route::get('products/brand/{id}','Main\ApiProductsController@actionShowProductsByBrand');
 Route::middleware('isAuth', 'hasRole:admin')->post('products/add', 'Main\ApiProductsController@actionAddProduct');
@@ -128,6 +131,7 @@ Route::middleware('hasRole:admin')->post('branches/add', 'Main\ApiContactsContro
 
     //Solutions
 Route::get('solutions','Main\ApiSolutionController@actionShowSolutions');
+Route::get('solutions/find/{findData}','Main\ApiSolutionController@actionFindSolutions');
 Route::middleware('isAuth', 'hasRole:admin')->post('solutions/add','Main\ApiSolutionController@actionAddSolution');
 
     //Sale

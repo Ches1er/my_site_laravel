@@ -97,4 +97,8 @@ class ApiProductsController extends Controller
         $data = $request->only('id','action','name', 'brandId', 'active','img','tech_info','applying_group','salesArea');
         return json_encode($this->productService->addUpdateProduct($data));
     }
+    public function  actionFindProducts($findData){
+        $products = $this->productService->findProducts($findData);
+        return json_encode($products);
+    }
 }

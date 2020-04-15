@@ -34,6 +34,7 @@ class DBApiContactsServices implements ServiceApiContacts
 
     public function addBranch(Array $data)
     {
+        $active = $data['active']==='false'?0:1;
         if (Branch::where('name', $data['name'])->first()&& $data['action']==='add')return ['response'=>'this branch exists'];
         if (Branch::updateOrCreate(['id'=>$data['id']],[
             'name' => $data['name'],
@@ -41,6 +42,7 @@ class DBApiContactsServices implements ServiceApiContacts
             'phone'=>$data['phone'],
             'long'=>$data['long'],
             'lat'=>$data['lat'],
+            'active'=>$active,
             'role_id' => $data['role_id']
         ])) {
             if ($data['action']==='update')return ['response'=>'update success'];

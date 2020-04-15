@@ -14,4 +14,5 @@ interface ServiceApiEvent
     public function showEvents(string $sales_area);
     public function addEvent(Array $data);
     public function delEvent(int $id);
+    public function findEvents(string $findData);
 }

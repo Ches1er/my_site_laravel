@@ -34,5 +34,9 @@ class ApiNewsController extends Controller
         $data['date'] = time();
         return json_encode($this->newsService->addNews($data));
     }
+    public function actionShowFindedNews(Request $request){
+        $params = $request->only('findData');
+        return json_encode($this->newsService->showFindedNews($params['findData']));
+    }
 
 }

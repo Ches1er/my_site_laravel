@@ -56,6 +56,5 @@ class User extends Authenticatable
                 $roles_array[]=$user->role;
             }
             return $roles_array;
-
     }
 }

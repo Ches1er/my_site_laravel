@@ -59,4 +59,10 @@ class DBApiEventsService implements ServiceApiEvent
     {
         return ['response'=>'success'];
     }
+
+    public function findEvents(string $findData)
+    {
+        $events = Event::where('full_event', 'like', '%'.$findData.'%')->get();
+        return $events;
+    }
 }

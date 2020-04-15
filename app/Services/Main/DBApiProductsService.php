@@ -63,4 +63,10 @@ class DBApiProductsService implements ServiceApiProducts
         $products = Product::where('brand_id',$id)->get();
         return $this->getWithImagesPath($products);
     }
+
+    public function findProducts(string $findData)
+    {
+        $products = Product::where('tech_info', 'like', '%'.$findData.'%')->get();
+        return $products;
+    }
 }

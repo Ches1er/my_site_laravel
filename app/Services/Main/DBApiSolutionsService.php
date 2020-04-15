@@ -12,11 +12,14 @@ namespace App\Services\Main;
 use App\Contracts\ServiceApiSolutions;
 use App\Models\Image;
 use App\Models\Solution;
+use App\MyTraits\findLittleHelper;
 use App\MyTraits\getObjWithImagesPath;
 
 class DBApiSolutionsService implements ServiceApiSolutions
 {
     use getObjWithImagesPath;
+    use findLittleHelper;
+
     public function showSolutions()
     {
         return $this->getWithImagesPath(Solution::get());
@@ -47,5 +50,12 @@ class DBApiSolutionsService implements ServiceApiSolutions
     public function delSolutions($id)
     {
         // TODO: Implement delSolutions() method.
+    }
+
+    public function findSolutions(string $findData)
+    {
+        $solutionIdsArray = $this->getSolutionsIdArray($findData);
+        return Solution::whereIn('id', $solutionIdsArray)->get();
+
     }
 }

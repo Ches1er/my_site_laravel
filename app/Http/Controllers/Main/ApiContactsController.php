@@ -26,7 +26,7 @@ class ApiContactsController extends Controller
         return json_encode($this->contactsService->showBranchesRoles());
     }
     public function actionAddBranch(Request $request){
-        $data = $request->only('id','name','address','phone','long','lat','role_id','action');
+        $data = $request->only('id','name','address','phone','long','lat','role_id','action','active');
         return json_encode($this->contactsService->addBranch($data));
     }
 }

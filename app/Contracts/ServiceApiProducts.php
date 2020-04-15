@@ -13,6 +13,7 @@ interface ServiceApiProducts
 {
     public function showAllProducts();
     public function showProduct(int $id);
+    public function findProducts(string $findData);
     public function showProductsByApp(int $id);
     public function showProductsByBrand(int $id);
     public function addUpdateProduct(array $data);

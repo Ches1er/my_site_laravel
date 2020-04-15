@@ -61,4 +61,10 @@ class DBApiNewsService implements ServiceApiNews
         $news = News::orderBy('id','DESC')->get();
         return $this->getWithImagesPath($news);
     }
+
+    public function showFindedNews(string $findData)
+    {
+        $news = News::where('full_news', 'like', '%'.$findData.'%')->get();
+        return $news;
+    }
 }

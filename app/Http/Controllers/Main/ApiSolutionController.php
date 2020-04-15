@@ -25,4 +25,8 @@ class ApiSolutionController extends Controller
     public function actionAddSolution(Request $request){
         $data = $request->only('id','name','desc','action','img','products','items');
         return json_encode($this->solutionService->addSolution($data));
-    }}
+    }
+    public function actionFindSolutions($findData){
+        return json_encode($this->solutionService->findSolutions($findData));
+    }
+}

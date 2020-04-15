@@ -38,4 +38,7 @@ class ApiEventsController extends Controller
         $data['date'] = (int)$data['date'];
         return json_encode($this->eventsService->addEvent($data));
     }
+    public function actionFindEvents($findData){
+        return json_encode($this->eventsService->findEvents($findData));
+    }
 }

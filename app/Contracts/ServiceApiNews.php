@@ -15,6 +15,7 @@ interface ServiceApiNews
 {
     public function showAllNews();
     public function showNews(string $sales_area);
+    public function showFindedNews(string $findData);
     public function addNews(Array $data);
     public function delNews(int $id);
 }
